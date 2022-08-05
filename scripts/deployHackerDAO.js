@@ -7,11 +7,11 @@ const hre = require("hardhat");
 
 async function main() {
 
-  const HackersDAO = await hre.ethers.getContractFactory('HackerDAO');
+  const HackersDAO = await hre.ethers.getContractFactory('TestingDAO');
   const hackersDAO = await HackersDAO.deploy();
   await hackersDAO.deployed();
 
-  console.log('HackersDAO', hackersDAO.address);
+  console.log('TestingDAO', hackersDAO.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
