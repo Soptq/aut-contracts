@@ -1,5 +1,5 @@
-const autIDAddress = "0x2ECefB89d166560d514B9dD3E84B1Dfec33A958B";
-const daoExpanderRegistryAddress = "0xB126D97141E5f379b14988985e18Af93a5C1B938";
+const autIDAddress = "0xc22d41B54671703349C3Aa26dAf286E30059874B";
+const daoExpanderRegistryAddress = "0x073E8B270844E6AB2Fd7d0aD9849D21aE75220c1";
 
 const comMetadata =
   "bafkreidjy6xlyf2he4iopzijy7bws3yl34xhwh726ca2xd7temqoqkz6xy";
@@ -17,7 +17,8 @@ var daoExpanderAbi =
   require("../artifacts/contracts/DAOExpander.sol/DAOExpander.json").abi;
 
 const provider = new ethers.providers.JsonRpcProvider(
-  "https://matic-mumbai.chainstacklabs.com/"
+  // "https://matic-mumbai.chainstacklabs.com/"
+  'https://goerli.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161'
 );
 
 // Wallet connected to a provider
@@ -27,11 +28,11 @@ const provider = new ethers.providers.JsonRpcProvider(
 // );
 const senderWalletMnemonic = new ethers.Wallet(process.env.MNEMONIC);
 let signer = senderWalletMnemonic.connect(provider);
-console.log(signer.address)
-const wallet = ethers.Wallet.createRandom();
-console.log(signer.address);
-console.log(wallet.mnemonic);
-console.log(wallet.privateKey);
+// console.log(signer.address)
+// const wallet = ethers.Wallet.createRandom();
+// console.log(signer.address);
+// console.log(wallet.mnemonic);
+// console.log(wallet.privateKey);
 
 const autIDContract = new ethers.Contract(autIDAddress, autIDAbi, signer);
 const daoExpanderRegistryContract = new ethers.Contract(
@@ -42,7 +43,7 @@ const daoExpanderRegistryContract = new ethers.Contract(
 
 async function mint(daoExpander) {
   const a = await autIDContract.mint(
-    'migrenaa',
+    'asdaqwe12wwsd',
     "bafkreigigsavco2dtgcg6ehmunu5cjzr7xiarsrxm6bfw5m5wpor5rfpoi",
     1,
     7,
@@ -74,6 +75,18 @@ async function getDAOData(daoExpander) {
   );
 
   const data = await daoExpanderContract.getDAOData();
+  console.log("data:", data);
+}
+
+
+async function getAutAddr(daoExpander) {
+  const daoExpanderContract = new ethers.Contract(
+    daoExpander,
+    daoExpanderAbi,
+    signer
+  );
+
+  const data = await daoExpanderContract.autIDAddr();
   console.log("data:", data);
 }
 
@@ -118,6 +131,10 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+async function setMetadata(metadata) {
+  await autIDContract.setMetadataUri(metadata);
+}
+
 async function passOnboarding(daoExpander, member) {
   const daoExpanderContract = new ethers.Contract(
     daoExpander,
@@ -140,20 +157,21 @@ async function getAutIDAddrFrinDAOExpander(daoExpander) {
 }
 
 async function getAutIDUsername(username) {
-  const addr = await autIDContract.autIDUsername(username);
+  const addr = await autIDContract.autIDAddr(username);
   console.log('[autIDUsername]: addr', addr);
 }
 async function test() {
   // await addMember('0x6706a83EF8E2228D639fBA5f6cc5308d6A6114Bd', signer.address);
 
   // await deployDAOExpander();
-  const daoExpander = "0xEf300E25897343e8d2d4b55F7b606fc90958beB0";
+  const daoExpander = "0x94C5A2d8B75D139FE02180Fd7Ce87EC55B01b358";
   const daoAddr = '0x3Dcf2c5D8b8997A3E5740DC8507Ed4E5533Dde14'
   const user = "0x1d6571bcCEa66F624d1232c63195D7E9708A0BB4";
+  // await getDAOExpanders()
+  // await getDAOData(daoExpander)
+  // await getAutAddr(daoExpander);
   // await getAutIDUsername('Taualnt');
   // await getAutIDMetadata(2);
-  // await getPoll(pollsAddress, 0);
-  // await createPoll(pollsAddress, 0, timestamp, 'bafkreibcuujzwl7hzd6uwi5t5zajur2tkdu2nhyouqvccd4oak3hyhijgy')
   // await addMember(daoAddr, '0x720Db641247BAacf528c696518C28153eB0E1100');
   // await getAutIDAddrForComExt(daoExpander);
   // await depl(1, '0x73297cb191a7f510C440a1Ce64Cb2E1b18753409')
@@ -169,7 +187,7 @@ async function test() {
   // await mint(daoExpander);
   // await getCommunities();
   // await isCoreTeam(daoExpander, user);
-  // await getDAOExpanders();
+  await setMetadata('ipfs://bafyreiavtgi6ellqz2plymcisoy6k2vt7hjpixjodtipqueiwhj4o6ya6q/metadata.json');
 }
 
 test();

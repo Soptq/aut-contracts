@@ -10,8 +10,8 @@ contract ERC721OnboardingPlugin is OnboardingModule {
 
     address public override daoExpanderAddress;
     address erc721Address;
-    constructor(address _dapExpanderAddr, address _erc721Address) {
-        daoExpanderAddress = _dapExpanderAddr;
+    constructor(address _daoExpanderAddr, address _erc721Address) {
+        daoExpanderAddress = _daoExpanderAddr;
         erc721Address = _erc721Address;
 
     }
