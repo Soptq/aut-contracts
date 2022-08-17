@@ -23,16 +23,16 @@ const provider = new ethers.providers.JsonRpcProvider(
 
 // Wallet connected to a provider
 // const senderWalletMnemonic = ethers.Wallet.fromMnemonic(
-//   process.env.MNEMONIC_2,
+//   process.env.MNEMONIC,
 //   "m/44'/60'/0'/0/0"
 // );
 const senderWalletMnemonic = new ethers.Wallet(process.env.MNEMONIC);
 let signer = senderWalletMnemonic.connect(provider);
-// console.log(signer.address)
-// const wallet = ethers.Wallet.createRandom();
-// console.log(signer.address);
-// console.log(wallet.mnemonic);
-// console.log(wallet.privateKey);
+console.log(signer.address)
+const wallet = ethers.Wallet.createRandom();
+console.log(signer.address);
+console.log(wallet.mnemonic);
+console.log(wallet.privateKey);
 
 const autIDContract = new ethers.Contract(autIDAddress, autIDAbi, signer);
 const daoExpanderRegistryContract = new ethers.Contract(

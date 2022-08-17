@@ -23,16 +23,16 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
  */
 module.exports = {
   solidity: "0.8.4",
-  defaultNetwork: "goerli",
+  defaultNetwork: "mumbai",
   networks: {
     hardhat: {},
     mumbai: {
       url: "https://matic-mumbai.chainstacklabs.com/",
-      accounts: [process.env.MNEMONIC],
+      accounts: [process.env.PRIVATE_KEY],
     },
     goerli: {
       url:"https://goerli.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161",
-      accounts: [process.env.MNEMONIC]
+      accounts: [process.env.PRIVATE_KEY]
     }
   },
   contractSizer: {
